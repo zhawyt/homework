@@ -1,14 +1,32 @@
 import pymysql
 from day1023 import settings
 import hashlib
+import re
 
 
 def register():
     print("******************开始注册***************")
-    username = input("请输入用户名：")
+    username = (input("请输入用户名：")).strip()
     password = input("请输入密码：")
     email = input("请输入邮箱：")
-    # todo ：用户名不能全部为空格，用户名去除空格，邮箱格式校验，usertype选择只能是0或者1,
+    user_type = input("请选择用户类型0or1：")
+    if not username or not password or not user_type or len(username) < 2:
+        print("参数有误")
+        return False
+    if not username.strip():
+        print("用户名格式错误")
+        return False
+
+    if user_type not in ("0", "1"):
+        print("用户类型错误")
+        return False
+
+    if email:
+        pa = r"\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]"
+        if not re.match(pa, email):
+            print("邮箱格式错误")
+            return False
+
     sql = """INSERT INTO USER(username, password, email) VALUES ('%s',sha1('%s'),'%s')""" % (username, password, email)
     try:
         res = cursor.execute(sql)
@@ -107,18 +125,19 @@ if __name__ == "__main__":
             if register():
                 print("注册成功")
             else:
-                print("注册失败，请重新选择要进行的操作")
+                print("请重新选择要进行的操作")
         elif option == "2":
             if login():
                 print("登录成功，请进行其他操作")
             else:
                 print("登录失败，请选择要进行的操作")
-        else:
+        elif option == "3":
             if search():
                 print("显示成功，请进行其他操作")
             else:
                 print("显示失败，请选择要进行的操作")
+        else:
+            print("选择错误，请重新选择！")
 
     cursor.close()
     conn.close()
-
