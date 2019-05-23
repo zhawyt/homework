@@ -1,0 +1,124 @@
+import pymysql
+from day1023 import settings
+import hashlib
+
+
+def register():
+    print("******************开始注册***************")
+    username = input("请输入用户名：")
+    password = input("请输入密码：")
+    email = input("请输入邮箱：")
+    # todo ：用户名不能全部为空格，用户名去除空格，邮箱格式校验，usertype选择只能是0或者1,
+    sql = """INSERT INTO USER(username, password, email) VALUES ('%s',sha1('%s'),'%s')""" % (username, password, email)
+    try:
+        res = cursor.execute(sql)
+        if res:
+            conn.commit()
+        else:
+            conn.rollback()
+            return False
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return False
+    return True
+
+
+def login():
+    print("*****************开始登录***************")
+    username = input("请输入用户名：")
+    password = input("请输入密码：")
+    password = hashlib.sha1(password.encode('utf8')).hexdigest()
+    sql = "select username,password from user where username=%s and password=%s"
+    res = cursor.execute(sql, [username, password])
+
+    if res:
+        return True
+    else:
+        return False
+
+
+def search():
+    print("****************展示所有信息*****************")
+    sql = "select username,usertype,password,regtime,email from user"
+    res = cursor.execute(sql)
+
+    if res:
+        datas = cursor.fetchall()
+        print("用户名\t\t\t\t\t用户类型\t\t\t\t\t密码\t\t\t\t\t\t\t\t\t\t\t\t注册时间\t\t\t\t\temail")
+        for data in datas:
+            user_type = "管理员" if data["usertype"] else "普通用户"
+            print(data["username"] + "\t\t\t\t\t" + user_type+"\t\t\t\t\t"+data["password"]+"\t\t"+data["regtime"].strftime("%Y-%m-%d %H:%M:%S")+"\t\t"+data["email"])
+        return True
+    else:
+        return False
+
+
+def init_database():
+    sql_init = """drop database  if exists homework;"""
+
+    res = cursor.execute(sql_init)
+
+    if not res:
+        print("初始化成功")
+    else:
+        print("初始化失败")
+
+    sql_ct_db = """create database homework """
+
+    res2 = cursor.execute(sql_ct_db)
+
+    if res2:
+        print("创建数据库成功")
+        conn.select_db("homework")
+    else:
+        print("创建数据库失败")
+
+    sql_ct_tb = """create table if not exists user(uid int primary key auto_increment,username varchar(40) not null UNIQUE,
+    usertype enum("0","1") default "0",password char(48) not null, regtime datetime default now(), email varchar(40))"""
+
+    res3 = cursor.execute(sql_ct_tb)
+
+    if not res3:
+        print("创建数据表成功")
+    else:
+        print("创建数据表失败")
+
+
+if __name__ == "__main__":
+    conn = pymysql.Connect(**settings.parameters)
+    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    init_database()
+
+    print("""\t\t\t\t\t1:注册""")
+    print("""\t\t\t\t\t2:登录""")
+    print("""\t\t\t\t\t3:显示用户信息""")
+    print("""\t\t\t\t\tq:退出""")
+
+    while 1:
+
+        option = input("请输入选项：")
+        print(option)
+        if len(option) > 1:
+            print("选择错误，请重新选择！")
+        if option == "q":
+            break
+        elif option == "1":
+            if register():
+                print("注册成功")
+            else:
+                print("注册失败，请重新选择要进行的操作")
+        elif option == "2":
+            if login():
+                print("登录成功，请进行其他操作")
+            else:
+                print("登录失败，请选择要进行的操作")
+        else:
+            if search():
+                print("显示成功，请进行其他操作")
+            else:
+                print("显示失败，请选择要进行的操作")
+
+    cursor.close()
+    conn.close()
+
