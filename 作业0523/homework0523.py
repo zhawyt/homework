@@ -1,5 +1,5 @@
 import pymysql
-from day1023 import settings
+import settings
 import hashlib
 import re
 
@@ -7,6 +7,16 @@ import re
 def register():
     print("******************开始注册***************")
     username = (input("请输入用户名：")).strip()
+
+    sql0 = "select username from user"
+    cursor.execute(sql0)
+    usernames = cursor.fetchall()
+    if usernames:
+        for user in usernames:
+            if username == user["username"]:
+                print("用户名重复")
+                return False
+
     password = input("请输入密码：")
     email = input("请输入邮箱：")
     user_type = input("请选择用户类型0or1：")
@@ -73,34 +83,20 @@ def search():
 
 
 def init_database():
-    sql_init = """drop database  if exists homework;"""
+    sql_init = """drop database if exists bbs;"""
 
-    res = cursor.execute(sql_init)
+    cursor.execute(sql_init)
 
-    if not res:
-        print("初始化成功")
-    else:
-        print("初始化失败")
+    sql_ct_db = """create database bbs """
 
-    sql_ct_db = """create database homework """
+    cursor.execute(sql_ct_db)
 
-    res2 = cursor.execute(sql_ct_db)
-
-    if res2:
-        print("创建数据库成功")
-        conn.select_db("homework")
-    else:
-        print("创建数据库失败")
+    conn.select_db("bbs")
 
     sql_ct_tb = """create table if not exists user(uid int primary key auto_increment,username varchar(40) not null UNIQUE,
     usertype enum("0","1") default "0",password char(48) not null, regtime datetime default now(), email varchar(40))"""
 
-    res3 = cursor.execute(sql_ct_tb)
-
-    if not res3:
-        print("创建数据表成功")
-    else:
-        print("创建数据表失败")
+    cursor.execute(sql_ct_tb)
 
 
 if __name__ == "__main__":
@@ -108,14 +104,9 @@ if __name__ == "__main__":
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     init_database()
 
-    print("""\t\t\t\t\t1:注册""")
-    print("""\t\t\t\t\t2:登录""")
-    print("""\t\t\t\t\t3:显示用户信息""")
-    print("""\t\t\t\t\tq:退出""")
-
     while 1:
 
-        option = input("请输入选项：")
+        option = input("请选择操作(1:注册;2:登录;3:显示用户信息;q:退出)：")
         print(option)
         if len(option) > 1:
             print("选择错误，请重新选择！")
