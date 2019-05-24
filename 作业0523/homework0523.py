@@ -70,14 +70,14 @@ def search():
     print("****************展示所有信息*****************")
     sql = "select username,usertype,password,regtime,email from user"
     res = cursor.execute(sql)
-    f1 = "{:19}{:19}{:50}{:20}{:20}"
-    f2 = "{:20}{:20}{:50}{:25}{:20}"
+    f1 = "{:20}{:20}{:50}{:20}{:20}"
+    # f2 = "{username:{l1}}{usertype:{l2}}{password:{l3}}{regtime:{l4}}{email:{}}"
     if res:
         datas = cursor.fetchall()
         print(f1.format("用户名", "用户类型", "密码", "注册日期", "email"))
         for data in datas:
-            user_type = "管理员" if data["usertype"] == "1" else "普通用户"
-            print(f2.format(data["username"], user_type, data["password"], data["regtime"].strftime("%Y-%m-%d %H:%M:%S"), data["email"]))
+            user_type = "admin" if data["usertype"] == "1" else "normal"
+            print(f1.format(data["username"], user_type, data["password"], data["regtime"].strftime("%Y-%m-%d %H:%M:%S"), data["email"]))
         return True
     else:
         return False
