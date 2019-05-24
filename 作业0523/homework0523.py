@@ -37,7 +37,7 @@ def register():
             print("邮箱格式错误")
             return False
 
-    sql = """INSERT INTO USER(username, password, email) VALUES ('%s',sha1('%s'),'%s')""" % (username, password, email)
+    sql = """INSERT INTO USER(username, password, email,usertype) VALUES ('%s',sha1('%s'),'%s', '%s')""" % (username, password, email, user_type)
     try:
         res = cursor.execute(sql)
         if res:
@@ -70,13 +70,14 @@ def search():
     print("****************展示所有信息*****************")
     sql = "select username,usertype,password,regtime,email from user"
     res = cursor.execute(sql)
-
+    f1 = "{:19}{:19}{:50}{:20}{:20}"
+    f2 = "{:20}{:20}{:50}{:25}{:20}"
     if res:
         datas = cursor.fetchall()
-        print("用户名\t\t\t\t\t用户类型\t\t\t\t\t密码\t\t\t\t\t\t\t\t\t\t\t\t注册时间\t\t\t\t\temail")
+        print(f1.format("用户名", "用户类型", "密码", "注册日期", "email"))
         for data in datas:
-            user_type = "管理员" if data["usertype"] else "普通用户"
-            print(data["username"] + "\t\t\t\t\t" + user_type+"\t\t\t\t\t"+data["password"]+"\t\t"+data["regtime"].strftime("%Y-%m-%d %H:%M:%S")+"\t\t"+data["email"])
+            user_type = "管理员" if data["usertype"] == "1" else "普通用户"
+            print(f2.format(data["username"], user_type, data["password"], data["regtime"].strftime("%Y-%m-%d %H:%M:%S"), data["email"]))
         return True
     else:
         return False
