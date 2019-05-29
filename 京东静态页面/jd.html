@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JD</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        a{text-decoration: none}
+        .top{width: 1440px;height: 30px;border-bottom: 1px;background: rgb(227, 228, 229)}
+        .top .location{width: 480px; height: 30px; float: left;position: relative}
+        .top .location img{position: absolute;right: 80px;margin-top:4px}
+        .top .location span{position: absolute;right: 40px;line-height: 30px}
+        .top .menu{width: 960px; height: 30px;float: right;position: relative}
+        .top .menu .menu_list{list-style: none}
+        .top .menu .menu_list li{float: left;margin-right: 10px;margin-top: 5px;color:#999}
+        .top .menu .menu_list li a{color: #999}
+        .top .menu .menu_list li a[class="login"]{color: #f10215}
+        .top .menu .menu_list .space{background: #ccc;height:10px; width: 1px; margin-top: 11px;float: left }
+        .header{width: 1440px;height: 140px;background: rgb(240, 243, 239)}
+        .header .logo{height: 170px;width: 190px;position: absolute;z-index: 1; background: #01cd74; margin-top: -30px;margin-left: 120px}
+        .header .logo img{height: 170px; width: 190px;}
+        .header .search{height: 70px;width: 1000px ; position: relative}
+        .header .search .form{position: absolute;width:500px;height:35px;margin: 20px 40px 10px 420px;background: white}
+        .header .search .form input{float: left;height: 35px; width: 400px;border: none}
+        .header .search .form .camera{float: left;height: 35px; width: 20px;background-image: url("sprite-photo-search.png");background-position: 0px 10px}
+        .header .search .form button{float: left;height: 35px; width: 80px;background: #f10215; border:none}
+        .header .car{float: right;background:white;width:150px;height: 35px;z-index: 2; margin: -50px 330px}
+        .header .car div{float: left;background-image: url("toolbars.png") ;width: 20px;height: 35px;margin-left: 20px;margin-top: 7px}
+        .header .car a{color: red;line-height: 35px}
+        .header .car div[class="number"]{height:20px; width:15px;float: right;background: red;color: white;margin-right: 5px;margin-left:0px;
+            margin-top:0px;border-radius:50%;line-height: 20px;padding-left: 2px}
+        .header .quote{float: right;width:100px;height: 100px;z-index: 3; margin: -70px 175px}
+        .header .treasure {height: 40px; width: 800px ; position: relative;margin-left: 360px;
+            margin-top: 35px}
+        .header .treasure ul{list-style: none}
+        .header .treasure li{float: left;margin-right: 10px;margin-top: 5px;color:#999;margin-left: 20px}
+        .header .treasure li a{color: #333}
+        .header .treasure div[class='space'] {float: left; width: 1px;height: 10px;background: #ccc;margin-top: 10px}
+        .content{width: 1440px;height: 550px;background: url("侧边.png") 50% 0px no-repeat; height: 500px; background-color: rgb(240, 243, 239)}
+        .content .category .category_list{float: left;display: block;margin: 30px 0px 0px 140px;list-style: none}
+        .content .category .category_list a{color: #626262;font-size: 15px}
+        .content .category .category_list span{color: #626262}
+        .content .category .category_list li[class="space"]{height: 8px}
+        .content .goods{float: left;display: block;margin: 30px 0px 0px 40px;height:450px;width:600px;background: url("content.jpg") 50% 0px no-repeat}
+        .content .goods_container{float: left;display: block;height:450px;width:200px; margin: 30px 0px 0px 10px}
+        .content .goods2{float: left;display: block;height:144px;width:200px;}
+        .content .goods3{float: left;display: block;height:144px;width:200px;margin-top: 9px}
+        .content .goods4{float: left;display: block;height:144px;width:200px;margin-top: 9px}
+        .content .goods_container img[class="pic"]{height:144px;width:200px}
+
+
+    </style>
+</head>
+<body>
+<div class="top">
+        <div class="location">
+            <img src="bj.png">
+            <span>北京</span>
+        </div>
+        <div class="menu">
+            <ul class="menu_list">
+                <li>你好，请<a class="login" href="">登录</a> <a class="login"href="">免费注册</a></li>
+                <li class="space"></li>
+                <li><a href="">我的订单</a></li>
+                <li class="space"></li>
+                <li><a href="">我的京东</a></li>
+                <li class="space"></li>
+                <li><a href="">京东会员</a></li>
+                <li class="space"></li>
+                <li><a href="">企业采购</a></li>
+                <li class="space"></li>
+                <li><a href="">客户服务</a></li>
+                <li class="space"></li>
+                <li><a href="">网站导航</a></li>
+                <li class="space"></li>
+                <li><a href="">手机京东</a></li>
+            </ul>
+        </div>
+</div>
+<div class="header">
+    <div class="logo"><img src="5ce50a74N63f1ab13.gif"></div>
+    <div class="search">
+        <div class="form">
+            <input type="text">
+            <div class="camera"></div>
+            <button><img src="search.png"></button>
+        </div>
+    </div>
+    <div class="car"><div></div><a href="">我的购物车</a><div class="number">0</div></div>
+    <div class="quote"><img style="width: 100px;height: 100px" src="二维码.png"></div>
+    <div class="hotword"></div>
+    <div class="treasure">
+        <ul class="treasure_list1">
+                <li><a href="">秒杀</a></li>
+                <li><a href="">优惠券</a></li>
+                <li><a href="">PLUS会员</a></li>
+                <li><a href="">闪购</a></li>
+        </ul>
+        <div class="space"></div>
+        <ul class="treasure_list2">
+                <li><a href="">拍卖</a></li>
+                <li><a href="">京东时尚</a></li>
+                <li><a href="">京东生鲜</a></li>
+        </ul>
+        <div class="space"></div>
+        <ul class="treasure_list3">
+                <li><a href="">海屯全球</a></li>
+                <li><a href="">京东金融</a></li>
+        </ul>
+    </div>
+</div>
+<div class="content">
+    <div class="category">
+        <ul class="category_list">
+            <li><a href="">家用电器</a></li>
+            <li class="space"></li>
+            <li><a href="">手机</a><span>/</span><a href="">运营商</a><span>/</span><a href="">数码</a></li>
+            <li class="space"></li>
+            <li><a href="">电脑</a><span>/</span><a href="">办公</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li class="space"></li>
+            <li><a href="">家具</a><span>/</span><a href="">家居</a><span>/</span><a href="">家装</a><span>/</span><a href="">厨具</a></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="goods">
+    </div>
+    <div class="goods_container">
+        <div class="goods2"><img class="pic" src="content2.jpg" alt=""></div>
+        <div class="goods3"><img class="pic" src="content2.jpg" alt=""></div>
+        <div class="goods4"><img class="pic" src="content2.jpg" alt=""></div>
+    </div>
+
+</div>
+
+</div>
+</body>
+</html>
